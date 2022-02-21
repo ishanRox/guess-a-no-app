@@ -1,15 +1,18 @@
-import { View, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import Header from "./components/Header";
 
 export default function App() {
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={styles.container}
     >
-      <Text>Universal React with Expo</Text>
+      <Header title="Guess a no" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
