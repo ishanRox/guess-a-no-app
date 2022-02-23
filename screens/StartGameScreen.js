@@ -7,11 +7,31 @@ import { useState } from "react";
 export default function StartGameScreen(props) {
 
     const [enteredValue, setEnteredValue] = useState('');
-
+    const [confirm, setConfirm] = useState(false);
+    const [selectedNumber, setSelectedNumber] = useState();
     const numberInputHandler = (inputText) => {
         setEnteredValue(inputText.replace(/[^0-9]/g, ''));
     };
 
+    const resetInputHandle = () => {
+        setEnteredValue('');
+        setConfirm(false);
+    };
+
+    const confirmInputHandle = () => {
+        const chosenNumber = setSelectedNumber(parseInt(enteredValue));
+        if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+            return;
+        }
+        setConfirm(true);
+        setEnteredValue('');
+    };
+
+    let confirmedOutput;
+
+    if (confirm) {
+        confirmedOutput = <Text>Chosen Number:{selectedNumber}</Text>
+    }
     return (
         <TouchableWithoutFeedback onPress={
             () => {
@@ -32,13 +52,14 @@ export default function StartGameScreen(props) {
                         keyboardType="numeric" style={styles.input} />
                     <View style={styles.buttonContainer}>
                         <View style={styles.buttons}>
-                            <Button color={Colors.accent} title="Reset" />
+                            <Button onPress={resetInputHandle} color={Colors.accent} title="Reset" />
                         </View>
                         <View style={styles.buttons}>
-                            <Button color={Colors.primary} title="confirm" />
+                            <Button onPress={confirmInputHandle} color={Colors.primary} title="confirm" />
                         </View>
                     </View>
                 </Card>
+                {confirmedOutput}
             </View></TouchableWithoutFeedback>
     );
 }
